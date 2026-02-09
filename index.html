@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanis Labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --text: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-muted: #777;
+            --bg: #fafafa;
+            --border: #e5e3df;
+            --accent: #3d3d3d;
+            --accent-light: rgba(61, 61, 61, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 16px;
+        }
+
+        /* Subtle paper texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.3;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Geometric accents - Carbon Dust style */
+        .geo-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .geo-1 {
+            width: 140px;
+            height: 140px;
+            background: var(--accent);
+            opacity: 0.12;
+            top: 10%;
+            right: 7%;
+        }
+
+        .geo-2 {
+            width: 90px;
+            height: 90px;
+            background: var(--text);
+            opacity: 0.05;
+            top: 16%;
+            right: 4%;
+        }
+
+        .geo-3 {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            opacity: 0.1;
+            bottom: 25%;
+            left: 5%;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .header-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .header-meta a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .header-meta a:hover {
+            color: var(--accent);
+        }
+
+        /* Intro */
+        .intro {
+            margin-bottom: 3.5rem;
+        }
+
+        .intro p {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Projects */
+        .project {
+            margin-bottom: 1.5rem;
+        }
+
+        .project:last-child {
+            margin-bottom: 0;
+        }
+
+        .project a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project h3 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 1.05rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+
+        .project a:hover h3 {
+            color: var(--accent);
+        }
+
+        .project p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .project-tags {
+            margin-top: 0.4rem;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 2px;
+            margin-right: 0.4rem;
+        }
+
+        /* Writing */
+        .essay {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .essay:first-of-type {
+            border-top: 1px solid var(--border);
+        }
+
+        .essay h3 {
+            font-family: 'Libre Baskerville', Georgia, serif;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .essay:hover h3 {
+            color: var(--accent);
+        }
+
+        .essay span {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Exploring */
+        .exploring-item {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* About */
+        .about-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .about-text a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-text a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 3rem 1.25rem;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .intro p {
+                font-size: 1.05rem;
+            }
+
+            .essay {
+                flex-direction: column;
+                gap: 0.2rem;
+            }
+
+            .geo-1 {
+                width: 100px;
+                height: 100px;
+                top: 3%;
+                right: 3%;
+            }
+
+            .geo-2 {
+                width: 60px;
+                height: 60px;
+            }
+
+            .geo-3 {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="geo-circle geo-1"></div>
+    <div class="geo-circle geo-2"></div>
+    <div class="geo-circle geo-3"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Tanis Labs</h1>
+            <p class="header-meta">A small workshop by <a href="https://linkedin.com/in/calumforsyth">Calum Forsyth</a></p>
+        </header>
+
+        <section class="intro">
+            <p>A home for experiments. Building tools, advisory work, writing.</p>
+        </section>
+
+        <section class="section">
+            <h2>Projects</h2>
+            <div class="project">
+                <a href="https://lenny.antimeme.co">
+                    <h3>Lenny's Podcast Antimemes</h3>
+                    <p>Surfacing counterintuitive insights from 200+ episodes</p>
+                </a>
+            </div>
+            <div class="project">
+                <a href="https://vibecodecamp.antimeme.co">
+                    <h3>Every Antimemes</h3>
+                    <p>Counterintuitive insights from Every's Vibe Code Camp</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Writing</h2>
+            <a href="#" class="essay">
+                <h3>Knowledge Work</h3>
+                <span>Coming soon</span>
+            </a>
+        </section>
+
+        <section class="section">
+            <h2>Advisory</h2>
+            <p class="about-text">Working closely with a small number of founders and research teams, helping them figure out what to test and how to test it, and frame the narrative around it. Pre-product-market-fit people with deep domain expertise, figuring out the "big if true."</p>
+        </section>
+
+        <section class="section">
+            <h2>About</h2>
+            <p class="about-text">I'm Calum. Background in science and research, then venture, now working with early-stage founders and building tools. Based in the UK. Find me on <a href="https://twitter.com/cdforsyth">X</a> or <a href="https://linkedin.com/in/calumforsyth">LinkedIn</a>.</p>
+        </section>
+
+        <footer class="footer">
+            <a href="mailto:calum@tanislabs.com">calum@tanislabs.com</a>
+        </footer>
+    </div>
+</body>
+</html>
